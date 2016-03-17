@@ -1,0 +1,9 @@
+@media print {
+    .sec{
+        margin-left: 80px;
+    }
+
+    #mydiv{
+        font-family: Arial;
+    }
+}
