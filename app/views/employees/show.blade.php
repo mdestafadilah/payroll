@@ -110,9 +110,9 @@
                 </table>
                 LAST EDITED BY :  
                         @if($employee->user->avatar == null)
-                        <img src="{{URL::to('uploads/avatar.png')}}" width="35px" height="35px" class="img-circle"> <span class="label label-danger">{{$employee->user->fullname}} [ {{$employee->user->position}} ]</span>
+                        <img src="{{URL::to('uploads/avatar.png')}}" width="35px" height="35px" class="img-circle"> <span class="label label-danger">{{$employee->user->user_fullnm}}</span>
                         @else
-                        <img src="{{URL::to('uploads/')}}/{{$employee->user->avatar}}" width="35px" height="35px" class="img-circle"> <span class="label label-danger">{{$employee->user->fullname}} [ {{$employee->user->position}} ]</span>
+                        <img src="{{URL::to('uploads/')}}/{{$employee->user->avatar}}" width="35px" height="35px" class="img-circle"> <span class="label label-danger">{{$employee->user->user_fullnm}}</span>
                         @endif
             </div>
         </div>

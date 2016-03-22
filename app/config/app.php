@@ -78,7 +78,7 @@ return array(
 	|
 	*/
 
-	'key' => 'nh0QNSfNGdCOOBx1AjIcWIBTpW8QQFHD',
+	'key' => '',
 
 	'cipher' => MCRYPT_RIJNDAEL_128,
 
@@ -105,7 +105,8 @@ return array(
 		'Illuminate\Database\DatabaseServiceProvider',
 		'Illuminate\Encryption\EncryptionServiceProvider',
 		'Illuminate\Filesystem\FilesystemServiceProvider',
-		'Illuminate\Hashing\HashServiceProvider',
+		// 'Illuminate\Hashing\HashServiceProvider',
+		'SHAHashServiceProvider',
 		'Illuminate\Html\HtmlServiceProvider',
 		'Illuminate\Log\LogServiceProvider',
 		'Illuminate\Mail\MailServiceProvider',

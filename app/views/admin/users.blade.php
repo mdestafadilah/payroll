@@ -31,14 +31,14 @@
                       <img src="{{URL::to('uploads/')}}/{{$value->avatar}}" width="35px" height="35px" class="img-circle">
                       @endif
                     </td>
-                    <td class="active">{{ $value->fullname }}</td>
-                    <td class="active">{{ $value->position }}</td>
+                    <td class="active">{{ $value->user_fullnm }}</td>
+                    <td class="active"><!-- {{ $value->position }} --></td>
                     <td class="active">
                       <a class="btn btn-small btn-default" href="{{ URL::to('admin/profile/' . $value->user_id) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{trans('labels.master.lbl_show_profile')}}</a>
                       <a class="btn btn-small btn-default" href="{{ URL::to('admin/update/' . $value->user_id ) }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> {{trans('labels.users.lbl_edit_profile')}}</a>
                     </td>
                     <td class="active">
-                      @if($value->del_flag == '0')
+                      @if($value->del_flg == '0')
                       {{ Form::open(array('url' => 'admin/'. $value->user_id. '/delete' , 'class' => 'pull-right')) }}
                       <button type="submit" class="btn btn-danger" aria-label="Left Align" id="delete">
                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> 

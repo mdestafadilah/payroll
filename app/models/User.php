@@ -10,7 +10,8 @@ class User extends Eloquent implements UserInterface, RemindableInterface {
 	 *
 	 * @var string
 	 */
-	protected $table = 'users';
+	protected $connection = 'ringdb';
+	protected $table = 'm_user';
 	protected $primaryKey = 'user_id';
 
 	/**

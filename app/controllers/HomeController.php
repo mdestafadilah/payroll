@@ -37,9 +37,9 @@ class HomeController extends BaseController {
 			return Redirect::to('login')->withErrors($validator);
 		} else {
 			$credentials = array(
-				'username' =>$input['username'],
+				'username' => $input['username'],
 				'password' => $input['password'],
-				'del_flag' => '0',
+				'del_flg' => '0',
 				);
 
 			if(Auth::attempt($credentials))
@@ -50,29 +50,14 @@ class HomeController extends BaseController {
 
 				return Redirect::to('employees');
 			} else {
-				$user_get_id = DB::table('users')->where('username', $input['username'])->first();
-				$condition = DB::table('users')->where('username', $input['username'])->count();
+				$user_get_id = User::where('username', $input['username'])->first();
+				$condition = User::where('username', $input['username'])->count();
 
 				if($condition > 0){
 					$user_id = $user_get_id->user_id;
-					$user_attempt = $user_get_id->ip_attempt + 1;
-
 					$user = User::find($user_id);
-					$user->ip_address = Request::getClientIp(true);
-					$user->ip_attempt = $user_attempt;
 
-					if($user_attempt = $user_get_id->ip_address !=  Request::getClientIp(true)){
-						$user->ip_attempt = 0;
-						$user->save();
-					}
-
-					if($user_attempt = $user_get_id->ip_attempt >= 3){
-						$user->del_flag = 1;
-						$user->ip_attempt = 0;
-						$user->save();
-					}
-
-					if($user->del_flag == 1){
+					if($user->del_flg == 1){
 						Session::flash('errormessage', 'User blocked! Contact your System Administrator');
 					}else{
 						Session::flash('errormessage', 'Username or Password is incorrect!');

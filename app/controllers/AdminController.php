@@ -35,7 +35,9 @@ class AdminController extends \BaseController
 
 
     public function postCreate()
-    {
+    {   
+        $getMaxId = User::select('m_user')->max('user_id') + 1;
+        $maxId = str_pad($getMaxId, 6, '0', STR_PAD_LEFT);
 
         $rules = array(
             'username' => 'required|min:4|unique:users',
@@ -51,9 +53,10 @@ class AdminController extends \BaseController
             return Redirect::to('admin/register')->withErrors($validator);
         } else {
             $user = new User;
+            $user->user_id = $maxId;
             $user->username = Input::get('username');
             $user->password = Hash::make(Input::get('password'));
-            $user->fullname = Input::get('fullname');
+            $user->user_fullnm = Input::get('fullname');
             $user->position = Input::get('position');
             $user->usr_role = Input::get('privilege');
             $user->langu='en';
@@ -92,7 +95,7 @@ class AdminController extends \BaseController
             $user = User::find($user_id);
 
                 $user->username = Input::get('username');
-                $user->fullname = Input::get('fullname');
+                $user->user_fullnm = Input::get('fullname');
                 $user->position = Input::get('position');
                 $user->usr_role = Input::get('privilege');
                 $user->langu = Input::get('language');
@@ -159,42 +162,42 @@ class AdminController extends \BaseController
     public function doDelete($user)
     {
         $user = User::find($user);
-        $condition = User::where('del_flag', '0')->get()->count();
+        $condition = User::where('del_flg', '0')->get()->count();
         $condition2 = User::where('usr_role', '1')
-        ->where('del_flag', '0')
+        ->where('del_flg', '0')
         ->get()->count();
         if ($condition > 1) {
             if ($user->usr_role != 1) {
-                $user->del_flag = '1';
+                $user->del_flg = '1';
                 $user->save();
                  if($user->avatar == null){
-                    Session::flash('message', '<img src="/payroll/uploads/avatar.png" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->fullname.' '.'</b>'.'Deleted Successfully!'); 
+                    Session::flash('message', '<img src="/payroll/uploads/avatar.png" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->user_fullnm.' '.'</b>'.'Deleted Successfully!'); 
                  }
                  else {
-                    Session::flash('message', '<img src="/payroll/uploads/'.$user->avatar.'" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->fullname.' '.'</b>'.'Deleted Successfully!');
+                    Session::flash('message', '<img src="/payroll/uploads/'.$user->avatar.'" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->user_fullnm.' '.'</b>'.'Deleted Successfully!');
                  }
 
                 return Redirect::to('/admin');
             } else {
                 if ($condition2 > 1) {
                     if ($user->user_id == Auth::user()->user_id) {
-                        $user->del_flag = '1';
+                        $user->del_flg = '1';
                         $user->save();
                         if($user->avatar == null){
-                            Session::flash('message', '<img src="/payroll/uploads/avatar.png" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->fullname.' '.'</b>'.'Deleted Successfully!'); 
+                            Session::flash('message', '<img src="/payroll/uploads/avatar.png" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->user_fullnm.' '.'</b>'.'Deleted Successfully!'); 
                         }
                         else {
-                            Session::flash('message', '<img src="/payroll/uploads/'.$user->avatar.'" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->fullname.' '.'</b>'.'Deleted Successfully!');
+                            Session::flash('message', '<img src="/payroll/uploads/'.$user->avatar.'" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->user_fullnm.' '.'</b>'.'Deleted Successfully!');
                         }
                         return Redirect::to('/logout');
                     } else {
-                        $user->del_flag = '1';
+                        $user->del_flg = '1';
                         $user->save();
                         if($user->avatar == null){
-                            Session::flash('message', '<img src="/payroll/uploads/avatar.png" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->fullname.' '.'</b>'.'Deleted Successfully!'); 
+                            Session::flash('message', '<img src="/payroll/uploads/avatar.png" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->user_fullnm.' '.'</b>'.'Deleted Successfully!'); 
                         }
                         else {
-                            Session::flash('message', '<img src="/payroll/uploads/'.$user->avatar.'" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->fullname.' '.'</b>'.'Deleted Successfully!');
+                            Session::flash('message', '<img src="/payroll/uploads/'.$user->avatar.'" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->user_fullnm.' '.'</b>'.'Deleted Successfully!');
                         }
                         return Redirect::back();
                     }
@@ -213,7 +216,7 @@ class AdminController extends \BaseController
     public function doActivate($user)
     {
         $user = User::find($user);
-        $user->del_flag = '0';
+        $user->del_flg = '0';
         $user->save();
 
         if($user->avatar == null){

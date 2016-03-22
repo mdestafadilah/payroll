@@ -29,7 +29,7 @@
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
         <div class="panel panel-danger">
             <div class="panel-heading">
-                <h3 class="panel-title">{{ $user->fullname }}</h3>
+                <h3 class="panel-title">{{ $user->user_fullnm }}</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -58,7 +58,7 @@
                         <tbody>
                             <tr>
                                 <td>{{trans('labels.profile.lbl_fullname')}}:</td>
-                                <td>{{$user->fullname }}</td>
+                                <td>{{$user->user_fullnm }}</td>
                             </tr>
                             <tr>
                                 <td>{{trans('labels.profile.lbl_position')}}:</td>
@@ -80,7 +80,7 @@
         <div class="panel-footer">
             <a class="btn btn-small btn-success"  href="{{ URL::to('admin/update/' . $user->user_id) }}"><span class="glyphicon glyphicon-glyphicon glyphicon-edit" aria-hidden="true"></span>{{trans('labels.users.lbl_edit_profile')}}</a>
             <a class="btn btn-small btn-success" href="{{ URL::to('admin/validate') }}"><span class="glyphicon glyphicon-glyphicon glyphicon-edit" aria-hidden="true"></span>{{trans('labels.master.lbl_change_password')}}</a>
-            @if($user->del_flag == '0')
+            @if($user->del_flg == '0')
             {{ Form::open(array('url' => 'admin/'. $user->user_id. '/delete' , 'class' => 'pull-right', 'id' => 'delete')) }}
             <button type="submit" class="btn btn-danger" style="width: 100px; !important" aria-label="Left Align">
                 <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>{{trans('labels.show.lbl_delete')}}</button>

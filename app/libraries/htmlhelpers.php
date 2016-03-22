@@ -172,13 +172,13 @@ Class HTMLHelper{
         $Otsalary =$tpay = 0;
         foreach ($ot as $totals) {
             if($totals->day_type == Config::get('constants.REGULAR_HOLIDAY')){
-                $tpay = $rate * $totals->time_ot;
+                $tpay = $rates * $totals->time_ot;
                 $tpay = $tpay * Config::get('constants.REGULAR_HOLIDAY_MULTIPLIER');
             }elseif($totals->day_type == Config::get('constants.SPECIAL_NON-WORKING_HOLIDAY') ){
-                $tpay = $rate * $totals->time_ot;
+                $tpay = $rates * $totals->time_ot;
                 $tpay = $tpay * Config::get('constants.SPECIAL_NON-WORKING_HOLIDAY');
             }else{
-                $tpay = $rate * $totals->time_ot;
+                $tpay = $rates * $totals->time_ot;
             }
 
             $Otsalary = $Otsalary +$tpay;

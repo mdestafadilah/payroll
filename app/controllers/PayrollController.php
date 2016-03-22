@@ -299,8 +299,8 @@ class PayrollController extends \BaseController {
 		$payroll->coverage				 = 	 $cover;
 		$payroll->user_id				 =	 Auth::user()->user_id;
 		$payroll->ot					 =	 $ot;
-		return $payroll;
-			//$payroll->save();
+		// return $payroll;
+		$payroll->save();
 		$pId = Payroll::all()->last();
 
 		return Redirect::to('employees/'.$emp_id.'/payroll')->with('message','Payslip generated successfully!');
