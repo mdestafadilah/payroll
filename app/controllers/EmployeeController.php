@@ -208,7 +208,7 @@ class EmployeeController extends \BaseController {
 
     public function search()
     {
-
+        
         $searchKeyword = Input::get('id');
         $results = Employee::where('emp_id',  $searchKeyword)
         ->orWhere('firstname', 'LIKE', '%'.  $searchKeyword .'%')

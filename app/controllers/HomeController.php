@@ -2,75 +2,69 @@
 
 class HomeController extends BaseController {
 
-	/*
-	|--------------------------------------------------------------------------
-	| Default Home Controller
-	|--------------------------------------------------------------------------
-	|
-	| You may wish to use controllers instead of, or in addition to, Closure
-	| based routes. That's great! Here is an example controller method to
-	| get you started. To route to this controller, just add the route:
-	|
-	|	Route::get('/', 'HomeController@showWelcome');
-	|
-	*/
-
 	public function showLogin()
 	{
-		return View::make('login');
+		return Redirect::to("http://". $_SERVER['HTTP_HOST']);
 	}
 
 
 	public function doLogin()
-	{
-		$logAttempt = 0;
-		$input = Input::all();
-		$rules = array(
-			'username' => 'required',
-			'password' => 'required'
-			);
+	{	
+		if(isset($_COOKIE["userid"]) && isset($_COOKIE["PHPSESSID"])){
+			$userId = $_COOKIE["userid"];
+            $sessionId = $_COOKIE["PHPSESSID"];
+            $useridSalt = 'jPE4stThc3YFfZqDLX5k8vfHzyBSG68T';
+	        $decUserid = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $useridSalt, base64_decode($userId), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)));
+            $count = User::where('user_id', $decUserid)->where('session_id',$sessionId)->count();
 
-		$validator = Validator::make($input, $rules);
+            if ($count > 0 ) { 
+				$userInfo = User::where('user_id', $decUserid)->first();
+				$passwordSalt = 'xQvVxnnZ9MH4HGNUeQScDhguEcNQtsCN';
+		        $decPassword = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $passwordSalt, base64_decode($userInfo->password), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)));
+				
+				$credentials = array(
+					'username' => $userInfo->username,
+					'password' => $decPassword,
+					'del_flg' => '0',
+					);
 
-		if($validator->fails())
-		{
-			return Redirect::to('login')->withErrors($validator);
-		} else {
-			$credentials = array(
-				'username' => $input['username'],
-				'password' => $input['password'],
-				'del_flg' => '0',
-				);
+				if(Auth::attempt($credentials))
 
-			if(Auth::attempt($credentials))
+				{	
+					$langu=Auth::user()->langu;
+					App::setLocale($langu);
+					Session::put('my.locale',$langu);
 
-			{	$langu=Auth::user()->langu;
-				App::setLocale($langu);
-				Session::put('my.locale',$langu);
-
-				return Redirect::to('employees');
-			} else {
-				$user_get_id = User::where('username', $input['username'])->first();
-				$condition = User::where('username', $input['username'])->count();
-
-				if($condition > 0){
-					$user_id = $user_get_id->user_id;
-					$user = User::find($user_id);
-
-					if($user->del_flg == 1){
-						Session::flash('errormessage', 'User blocked! Contact your System Administrator');
-					}else{
-						Session::flash('errormessage', 'Username or Password is incorrect!');
-						$user->save();
-					}
-				}else{
-					Session::flash('errormessage', 'User does not exist!');
+					return Redirect::to('employees');
+				} else {
+					$this->cookie();
+					return Redirect::to("http://". $_SERVER['HTTP_HOST']);
 				}
-				return Redirect::to('login');
-			}
+
+
+            } else {
+            	$this->cookie();
+           		return Redirect::to("http://". $_SERVER['HTTP_HOST']);
+            }
+
+	        
+		} else {
+			
+            $this->cookie();
+			return Redirect::to("http://". $_SERVER['HTTP_HOST']);
 		}
+
+
 	}
 
+	public function cookie(){
+		// Cookie::queue('error', 'value', '1');
+		Cookie::queue(Cookie::forget('PHPSESSID'));
+		Cookie::queue(Cookie::forget('userid'));
+    	Cookie::queue(Cookie::forget('laravel_session'));
+		Cookie::queue(Cookie::forget('ci_session'));
+		Cookie::queue(Cookie::forget('csrf_cookie'));
+	}
 
 	public function getEmpRequest(){
 		return View::make('payrollRequest');
@@ -114,13 +108,6 @@ class HomeController extends BaseController {
 			return Redirect::to('request');
 		}
 	}
-	
 
-	public function logout()
-	{
-		Auth::logout();
-		Session::flush();
-		return Redirect::to('/');
-	}
 
 }

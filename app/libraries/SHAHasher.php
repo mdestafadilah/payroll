@@ -10,7 +10,9 @@ class SHAHasher implements Illuminate\Hashing\HasherInterface {
      * @return string
      */
     public function make($value, array $options = array()) {
-        return hash('sha1', $value);
+        // return hash('sha1', $value);
+        $salt = 'xQvVxnnZ9MH4HGNUeQScDhguEcNQtsCN';
+        return trim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $salt, $value, MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND))));
     }
 
     /**

@@ -1,6 +1,7 @@
 <?php
 
 Route::group(array('before' => 'auth'), function(){
+
 	Route::get('employees/sumarryReports','EmployeeController@postdisplaySummaryReport');
 	Route::post('employees/sumarryReports/filter','EmployeeController@showdisplaySummaryReport');
 
@@ -84,7 +85,7 @@ Route::group(array('before' => 'auth'), function(){
 
 Route::group(array('before' => 'guest'), function(){
 
-	Route::get('/','EmployeeController@showRoot');
+	Route::get('/','HomeController@doLogin');
 	Route::get('login','HomeController@showLogin');
 	Route::post('login', 'HomeController@doLogin');
 
@@ -145,12 +146,20 @@ Route::group(array('before' => 'hrpass'),function(){
 
 });
 
+// Route::get('/logout' ,'HomeController@doLogout');
+
 Route::get('/logout', function()
 {
 	Auth::logout();
 	Session::flush();
-	return Redirect::to('/');
+	Cookie::queue(Cookie::forget('PHPSESSID'));
+	Cookie::queue(Cookie::forget('userid'));
+	Cookie::queue(Cookie::forget('laravel_session'));
+	Cookie::queue(Cookie::forget('ci_session'));
+	Cookie::queue(Cookie::forget('csrf_cookie'));
+	return Redirect::to("http://". $_SERVER['HTTP_HOST']);
 });
+
 /*
 App::error(function($exception, $code)
 {	$pathInfo = Request::getPathInfo();
