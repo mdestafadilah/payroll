@@ -13,12 +13,10 @@ class HomeController extends BaseController {
 		if(isset($_COOKIE["userid"]) && isset($_COOKIE["PHPSESSID"])){
 			$userId = $_COOKIE["userid"];
             $sessionId = $_COOKIE["PHPSESSID"];
-            $useridSalt = 'jPE4stThc3YFfZqDLX5k8vfHzyBSG68T';
-	        $decUserid = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $useridSalt, base64_decode($userId), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)));
-            $count = User::where('user_id', $decUserid)->where('session_id',$sessionId)->count();
+            $count = User::where('user_id', $userId)->where('session_id',$sessionId)->count();
 
             if ($count > 0 ) { 
-				$userInfo = User::where('user_id', $decUserid)->first();
+				$userInfo = User::where('user_id', $userId)->where('session_id',$sessionId)->first();
 				$passwordSalt = 'xQvVxnnZ9MH4HGNUeQScDhguEcNQtsCN';
 		        $decPassword = trim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $passwordSalt, base64_decode($userInfo->password), MCRYPT_MODE_ECB, mcrypt_create_iv(mcrypt_get_iv_size(MCRYPT_RIJNDAEL_256, MCRYPT_MODE_ECB), MCRYPT_RAND)));
 				
