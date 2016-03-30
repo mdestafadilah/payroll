@@ -39,15 +39,18 @@ class AdminController extends \BaseController
     {   
         $getMaxId = User::select('m_user')->max('user_id') + 1;
         $maxId = str_pad($getMaxId, 6, '0', STR_PAD_LEFT);
-
+        $verifier = App::make('validation.presence');
+        $connection ='ringdb';
+        $verifier->setConnection($connection);
         $rules = array(
-            'username' => 'required|min:4|unique:users',
+            'username' => 'required|min:4|unique:m_user,username',
             'password' => 'required|min:4',
             'fullname' => 'required',
             'position' => 'required',
             );
 
         $validator = Validator::make(Input::all(), $rules);
+        $validator->setPresenceVerifier($verifier);
 
         if ($validator->fails()) {
             return Redirect::to('admin/register')->withErrors($validator);
@@ -72,8 +75,8 @@ class AdminController extends \BaseController
         $positions = MCode::where('idnt_id','000001')->lists('nm1','cd1');
        // $condition = User::where('usr_role', '1')->get()->count();
         return View::make('admin.update')
-            ->with('user', $user)
-            ->with('positions',$positions);
+        ->with('user', $user)
+        ->with('positions',$positions);
     }
 
 
@@ -83,7 +86,7 @@ class AdminController extends \BaseController
             'username' => 'required',
             'fullname' => 'required',
             'position' => 'required',
-        );
+            );
 
         $validator = Validator::make(Input::all(), $rules);
 
@@ -93,22 +96,22 @@ class AdminController extends \BaseController
         } else {
             $user = User::find($user_id);
 
-                $user->username = Input::get('username');
-                $user->user_fullnm = Input::get('fullname');
-                $user->position = Input::get('position');
-                $user->langu = Input::get('language');
-                $user->save();
-              App::setLocale(Input::get('language'));
+            $user->username = Input::get('username');
+            $user->user_fullnm = Input::get('fullname');
+            $user->position = Input::get('position');
+            $user->langu = Input::get('language');
+            $user->save();
+            App::setLocale(Input::get('language'));
 
 
             $logid = Auth::id();
-   
+
             if($logid == $user_id){
                 Session::put('my.locale',Input::get('language'));
-           }
+            }
             
-                Session::flash('message','Account updated successfully');
-                return Redirect::to('/admin/profile/'.$user_id);
+            Session::flash('message','Account updated successfully');
+            return Redirect::to('/admin/profile/'.$user_id);
 
         }
     }
@@ -154,15 +157,15 @@ class AdminController extends \BaseController
     {
         $user = User::find($user_id);
         $position = MCode::where('idnt_id','000001')
-                    ->where('cd1',$user->position)
-                    ->pluck('nm1');
+        ->where('cd1',$user->position)
+        ->pluck('nm1');
         $role = MCode::where('idnt_id','000001')
-                    ->where('cd1',$user->position)
-                    ->pluck('cd2');
+        ->where('cd1',$user->position)
+        ->pluck('cd2');
         return View::make('admin.profile')
-                    ->with('user', $user)
-                    ->with('position',$position)
-                    ->with('role',$role);
+        ->with('user', $user)
+        ->with('position',$position)
+        ->with('role',$role);
     }
 
 
@@ -177,12 +180,12 @@ class AdminController extends \BaseController
             if ($user->usr_role != 1) {
                 $user->del_flg = '1';
                 $user->save();
-                 if($user->avatar == null){
+                if($user->avatar == null){
                     Session::flash('message', '<img src="/payroll/uploads/avatar.png" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->user_fullnm.' '.'</b>'.'Deleted Successfully!'); 
-                 }
-                 else {
+                }
+                else {
                     Session::flash('message', '<img src="/payroll/uploads/'.$user->avatar.'" width="45px" height="45px" class="img-circle" "/>'.'&nbsp;&nbsp;&nbsp;'.'<b>'.$user->user_fullnm.' '.'</b>'.'Deleted Successfully!');
-                 }
+                }
 
                 return Redirect::to('/admin');
             } else {
@@ -410,89 +413,89 @@ class AdminController extends \BaseController
         $v = Validator::make(Input::all(),$rule);
 
         if($v->fails()){
-           return Redirect::to('/employees/'. $emp_id.'/erc/')
-           ->withErrors($v);
-       }
-       $contrib = EmployerContrib::find($emp_id);
-       $contrib->sssERC = Input::get('sss');
-       $contrib->philHealthERC = Input::get('philhealth');
-       $contrib->pagibigERC = Input::get('pagibig');
-       $contrib->user_id = Auth::user()->user_id;
-       $contrib->save();
+         return Redirect::to('/employees/'. $emp_id.'/erc/')
+         ->withErrors($v);
+     }
+     $contrib = EmployerContrib::find($emp_id);
+     $contrib->sssERC = Input::get('sss');
+     $contrib->philHealthERC = Input::get('philhealth');
+     $contrib->pagibigERC = Input::get('pagibig');
+     $contrib->user_id = Auth::user()->user_id;
+     $contrib->save();
 
-       return Redirect::back()->with('message','Employer Share successfully updated');
-   }
+     return Redirect::back()->with('message','Employer Share successfully updated');
+ }
 
 
-   public function getSampless(){
-       $in = '09:00';
-       $out = '08:00';
-       $timein =floatval( str_replace(':','.', $in));
-       $timeout = floatval(str_replace(':','.',$out));
-       if($timein > Config::get('constants.STANDARD_TIME_IN') ){
-           $Imin =$timein - (int)$timein ;
-           if($Imin == .00){
-               $morning = Config::get('constants.STANDARD_LUNCH_BREAK') - (int)$timein ;
-           }else{
-               $Ihr = Config::get('constants.STANDARD_LUNCH_BREAK') - (int)$timein -1;
-               $Imin = Config::get('constants.MINUTE_VALUE') - $Imin ;
-               $morning = $Ihr + $Imin;
-           }
-       }elseif($timein<8 || $timein > Config::get('constants.STANDARD_LUNCH_BREAK')){
-           $morning=0;
-       }else{
-           $morning =Config::get('constants.STANDARD_LUNCH_BREAK') - Config::get('constants.STANDARD_TIME_IN');
-       } $timeut=0;
+ public function getSampless(){
+     $in = '09:00';
+     $out = '08:00';
+     $timein =floatval( str_replace(':','.', $in));
+     $timeout = floatval(str_replace(':','.',$out));
+     if($timein > Config::get('constants.STANDARD_TIME_IN') ){
+         $Imin =$timein - (int)$timein ;
+         if($Imin == .00){
+             $morning = Config::get('constants.STANDARD_LUNCH_BREAK') - (int)$timein ;
+         }else{
+             $Ihr = Config::get('constants.STANDARD_LUNCH_BREAK') - (int)$timein -1;
+             $Imin = Config::get('constants.MINUTE_VALUE') - $Imin ;
+             $morning = $Ihr + $Imin;
+         }
+     }elseif($timein<8 || $timein > Config::get('constants.STANDARD_LUNCH_BREAK')){
+         $morning=0;
+     }else{
+         $morning =Config::get('constants.STANDARD_LUNCH_BREAK') - Config::get('constants.STANDARD_TIME_IN');
+     } $timeut=0;
 
-       if($morning == 0){
-           if($timein < 13){
-               $timeut = $timein + Config::get('constants.BALANCE_24HR')-Config::get('constants.24HR_VALUE_OF_1');
-           }else{
-               $timeut=$timein-Config::get('constants.24HR_VALUE_OF_1');
-           }
+     if($morning == 0){
+         if($timein < 13){
+             $timeut = $timein + Config::get('constants.BALANCE_24HR')-Config::get('constants.24HR_VALUE_OF_1');
+         }else{
+             $timeut=$timein-Config::get('constants.24HR_VALUE_OF_1');
+         }
 
-           $mins = $timeut - (int)$timeut;
-           $timeut = (int)$timeut + $mins/Config::get('constants.MINUTE_VALUE');
+         $mins = $timeut - (int)$timeut;
+         $timeut = (int)$timeut + $mins/Config::get('constants.MINUTE_VALUE');
 
-           if($timeout <Config::get('constants.24HR_VALUE_OF_1')){
-               $timeouts = $timeout +Config::get('constants.BALANCE_24HR') -Config::get('constants.24HR_VALUE_OF_1');
+         if($timeout <Config::get('constants.24HR_VALUE_OF_1')){
+             $timeouts = $timeout +Config::get('constants.BALANCE_24HR') -Config::get('constants.24HR_VALUE_OF_1');
 
-           }else{
-               $timeouts = $timeout-Config::get('constants.24HR_VALUE_OF_1');
-           }
-           $afternoon = $timeouts - $timeut;
-       }elseif($timeout<Config::get('constants.24HR_VALUE_OF_1')){
-           $afternoon = $timeout +Config::get('constants.BALANCE_24HR') -Config::get('constants.24HR_VALUE_OF_1');
-       }else {
-           $afternoon = $timeout - Config::get('constants.24HR_VALUE_OF_1');
-       }
+         }else{
+             $timeouts = $timeout-Config::get('constants.24HR_VALUE_OF_1');
+         }
+         $afternoon = $timeouts - $timeut;
+     }elseif($timeout<Config::get('constants.24HR_VALUE_OF_1')){
+         $afternoon = $timeout +Config::get('constants.BALANCE_24HR') -Config::get('constants.24HR_VALUE_OF_1');
+     }else {
+         $afternoon = $timeout - Config::get('constants.24HR_VALUE_OF_1');
+     }
 
-       $total = $morning + $afternoon;
-       if($total != (int)$total && $morning != 0){
+     $total = $morning + $afternoon;
+     if($total != (int)$total && $morning != 0){
 
-           $fpart = $total-(int)$total;
-           $min =  number_format($fpart/Config::get('constants.MINUTE_VALUE'),2,'.','');
-           $total = $min + (int)$total;
+         $fpart = $total-(int)$total;
+         $min =  number_format($fpart/Config::get('constants.MINUTE_VALUE'),2,'.','');
+         $total = $min + (int)$total;
 
-       }elseif($morning == 0){
-           $total = $afternoon;
-       }$late = 0;
+     }elseif($morning == 0){
+         $total = $afternoon;
+     }$late = 0;
 
-       if($timein > 9.15 || $timein < 5){
-           if($timein > 12){
-               $timein = $timein - Config::get('constants.BALANCE_24HR');
-           }  $mlate = (Config::get('constants.STANDARD_LUNCH_BREAK') - Config::get('constants.STANDARD_TIME_IN'))-$morning;
-           if($morning !=0){
-               $late = $mlate;
-           }else{
-               $mornMins = $timein - (int)$timein;
-               $mornMins = $mornMins/Config::get('constants.MINUTE_VALUE');
-               $morning = $mornMins + (int)$timein;
-                $late = $timeout - $ot;
-           }
+     if($timein > 9.15 || $timein < 5){
+         if($timein > 12){
+             $timein = $timein - Config::get('constants.BALANCE_24HR');
+         }  $mlate = (Config::get('constants.STANDARD_LUNCH_BREAK') - Config::get('constants.STANDARD_TIME_IN'))-$morning;
+         if($morning !=0){
+             $late = $mlate;
+         }else{
+             $mornMins = $timein - (int)$timein;
+             $mornMins = $mornMins/Config::get('constants.MINUTE_VALUE');
+             $morning = $mornMins + (int)$timein;
+             $late = $timeout - $ot;
+         }
 
-       }
-       return $total;
-    }
-    
+     }
+     return $total;
+ }
+
 }

@@ -30,6 +30,7 @@
         {{ Session::get('errormessage') }}
     </div>
     @endif
+
     {{ Form::open(array('url' => 'admin/register')) }}
     <div class="row centered-form">
         <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad">
@@ -39,6 +40,7 @@
                     <h3 class="panel-title">{{trans('labels.register.lbl_title')}}</h3>
                </div>
                <div class="panel-body">
+                <input type="password" style="width:1px;height:1px;background-color:transparent;border:none;">
                 <div class="form-group @if ($errors->has('username')) has-error @endif">
                     <label for="username">{{trans('labels.register.lbl_username')}}</label>
                     <input type="text" id="username" class="form-control" name="username" placeholder="{{trans('placeholder.register.username')}}" value="{{ Input::old('username') }}">
@@ -46,7 +48,7 @@
                     <div class="alert alert-danger" role="alert">
                         <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
                         <span class="sr-only">Error:</span>
-                        Username is required.
+                        {{$errors->first('username')}}
                     </div>
                 </p>
                 @endif
