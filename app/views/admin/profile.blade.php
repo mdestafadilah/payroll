@@ -62,11 +62,11 @@
                             </tr>
                             <tr>
                                 <td>{{trans('labels.profile.lbl_position')}}:</td>
-                                <td>{{ $user->position }}</td>
+                                <td>{{ $position}}</td>
                             </tr>
                             <tr>
                                 <td>{{trans('labels.profile.lbl_role')}}:</td>
-                                @if($user->usr_role == '1')
+                                @if($role == '1')
                                 <td>{{'Admin'}}</td>
                                 @else
                                 <td>{{'HR'}}</td>

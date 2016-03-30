@@ -75,7 +75,7 @@
         </p>
         @endif
     </div>
-    <div class="form-group @if ($errors->has('position')) has-error @endif">
+    <!-- <div class="form-group @if ($errors->has('position')) has-error @endif">
         <label for="position">{{trans('labels.register.lbl_position')}}</label>
         <input type="text" id="position" class="form-control" name="position" placeholder="{{trans('placeholder.register.position')}}" value="{{ Input::old('position') }}">
         @if ($errors->has('position')) <p class="help-block">
@@ -86,15 +86,23 @@
         </div>
     </p>
     @endif
-</div>
+</div> -->
     <div class="form-group">
        <label for="privilege">{{trans('labels.register.lbl_privilege')}}</label>
-
-       <select name="privilege" class="form-control">
+       {{Form::select('position', $positions,null,array('class'=>'form-control'));}}
+       @if ($errors->has('position')) <p class="help-block">
+        <div class="alert alert-danger" role="alert">
+            <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+            <span class="sr-only">Error:</span>
+            {{trans('labels.register.lbl_position')}} is required.
+        </div>
+    </p>
+    @endif
+       <!-- <select name="privilege" class="form-control">
            <option disabled selected>{{trans('placeholder.register.privilege')}}</option>
            <option value="0" >{{trans('labels.register.lbl_hr')}}</option>
            <option value="1" >{{trans('labels.register.lbl_admin')}}</option>
-       </select>
+       </select> -->
     </div>
 
 </div>

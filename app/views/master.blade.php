@@ -106,7 +106,10 @@
                     @else
                     <li><img src="{{URL::to('uploads/')}}/{{Auth::user()->avatar}}" width="45px" height="45px" class="img-circle"></li>
                     @endif
-                    @if(Auth::user()->usr_role == 1)
+                    <?php 
+                    $cd2 = MCode::where('idnt_id','000001')->where('cd1',Auth::user()->position)->pluck('cd2');
+                    ?>
+                    @if($cd2 == 1)
                     <li><a href="{{URL::to('admin/profile/'.Auth::user()->user_id.'/')}}">{{ ucwords(Auth::user()->user_fullnm) }}</a></li>
                     @else
                     <li><a href="{{URL::to('hr/profile/'.Auth::user()->user_id.'/')}}">{{ ucwords(Auth::user()->user_fullnm) }}</a></li>
@@ -114,7 +117,7 @@
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> MENU<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
-                            @if(Auth::user()->usr_role == 1)
+                            @if($cd2 == 1)
                             <li><a href="{{URL::to('admin/')}}"><span class="glyphicon glyphicon-th-list"></span> ALL ACCOUNTS</a></li>
                             <li><a href="{{URL::to('admin/register')}}"><span class="glyphicon glyphicon-plus"></span> CREATE ACCOUNT</a></li>
                             <li><a href="{{URL::to('employees/tax')}}"><span class="glyphicon glyphicon-usd"></span> TAX</a></li>

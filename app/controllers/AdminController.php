@@ -30,7 +30,8 @@ class AdminController extends \BaseController
 
     public function getCreate()
     {
-        return View::make('admin.register');
+        $positions = MCode::where('idnt_id','000001')->lists('nm1','cd1');
+        return View::make('admin.register')->with('positions',$positions);
     }
 
 
@@ -44,7 +45,6 @@ class AdminController extends \BaseController
             'password' => 'required|min:4',
             'fullname' => 'required',
             'position' => 'required',
-            'privilege' => 'required',
             );
 
         $validator = Validator::make(Input::all(), $rules);
@@ -58,7 +58,6 @@ class AdminController extends \BaseController
             $user->password = Hash::make(Input::get('password'));
             $user->user_fullnm = Input::get('fullname');
             $user->position = Input::get('position');
-            $user->usr_role = Input::get('privilege');
             $user->langu='en';
             $user->save();
             Session::flash('message', 'User account created successfully ');
@@ -70,10 +69,11 @@ class AdminController extends \BaseController
     public function getUpdate($user_id)
     {
         $user = User::find($user_id);
-        $condition = User::where('usr_role', '1')->get()->count();
+        $positions = MCode::where('idnt_id','000001')->lists('nm1','cd1');
+       // $condition = User::where('usr_role', '1')->get()->count();
         return View::make('admin.update')
             ->with('user', $user)
-            ->with('condition',$condition);
+            ->with('positions',$positions);
     }
 
 
@@ -83,7 +83,6 @@ class AdminController extends \BaseController
             'username' => 'required',
             'fullname' => 'required',
             'position' => 'required',
-            'privilege' => 'required',
         );
 
         $validator = Validator::make(Input::all(), $rules);
@@ -97,7 +96,6 @@ class AdminController extends \BaseController
                 $user->username = Input::get('username');
                 $user->user_fullnm = Input::get('fullname');
                 $user->position = Input::get('position');
-                $user->usr_role = Input::get('privilege');
                 $user->langu = Input::get('language');
                 $user->save();
               App::setLocale(Input::get('language'));
@@ -155,7 +153,16 @@ class AdminController extends \BaseController
     public function getProfile($user_id)
     {
         $user = User::find($user_id);
-        return View::make('admin.profile')->with('user', $user);
+        $position = MCode::where('idnt_id','000001')
+                    ->where('cd1',$user->position)
+                    ->pluck('nm1');
+        $role = MCode::where('idnt_id','000001')
+                    ->where('cd1',$user->position)
+                    ->pluck('cd2');
+        return View::make('admin.profile')
+                    ->with('user', $user)
+                    ->with('position',$position)
+                    ->with('role',$role);
     }
 
 
