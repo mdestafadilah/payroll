@@ -109,9 +109,9 @@
                     @endif{{ $info->firstname }} {{ $info->lastname }} 
                 </td>
 
-                <td class="active">{{ $info->time_ot }}</td>
-                <td class="active">{{ $info->time_late }}</td>
-                <td class="active">{{ $info->time_total }}</td>
+                <td class="active">{{ round($info->time_ot, 2) }}</td>
+                <td class="active">{{ round($info->time_late, 2) }}</td>
+                <td class="active">{{ round($info->time_total, 2) }}</td>
                 
             </tr>
             @endforeach

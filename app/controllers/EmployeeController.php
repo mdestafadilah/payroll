@@ -17,12 +17,18 @@ class EmployeeController extends \BaseController {
     {
         $searchKeyword = Input::get('SearchPeriod');
 
+        //$stringreplace = preg_replace('/\s+/', '', $searchKeyword);
+        $stringreplace = str_replace(' - ', '_To_', $searchKeyword);
+
+        $file_name = "Payroll_Exported_Report(".$stringreplace.").csv";
+
+
         $headers = [
-                'Cache-Control'       => 'must-revalidate, post-check=0, pre-check=0'
-            ,   'Content-type'        => 'text/csv'
-            ,   'Content-Disposition' => 'attachment; filename=Payroll_Exported_Report('.$searchKeyword.').csv'
-            ,   'Expires'             => '0'
-            ,   'Pragma'              => 'public'
+                "Cache-Control"       => "must-revalidate, post-check=0, pre-check=0"
+            ,   "Content-type"        => "text/csv"            //'application/vnd.ms-excel' 
+            ,   "Content-Disposition" => "attachment; filename=".$file_name            //'attachment; filename=Payroll_Exported_Report('.$searchKeyword.').csv'
+            ,   "Expires"             => "0"
+            ,   "Pragma"              => "public"
         ];
 
             $searchFrom = substr($searchKeyword, 0, 10);
@@ -31,7 +37,8 @@ class EmployeeController extends \BaseController {
             DB::setFetchMode(PDO::FETCH_ASSOC);
 
             $list = DB::table('employees')
-            ->select(DB::raw('employees.firstname as First_Name'), DB::raw('employees.lastname as Last_Name'), DB::raw('SUM(employee_attendance.time_ot) as Total_Overtime'), DB::raw('SUM(employee_attendance.time_late) as Total_Late'), DB::raw('SUM(employee_attendance.time_total) as Total_Time')) 
+            //->select(DB::raw('employees.firstname as First_Name'), DB::raw('employees.lastname as Last_Name'), DB::raw('SUM(employee_attendance.time_ot) as Total_Overtime'), DB::raw('SUM(employee_attendance.time_late) as Total_Late'), DB::raw('SUM(employee_attendance.time_total) as Total_Time')) 
+            ->select(DB::raw('employees.firstname as First_Name'), DB::raw('employees.lastname as Last_Name'), DB::raw('ROUND((SUM(employee_attendance.time_ot)) , 2 ) as Total_Overtime'), DB::raw('ROUND((SUM(employee_attendance.time_late)) , 2 ) as Total_Late'), DB::raw('ROUND((SUM(employee_attendance.time_total)) , 2 ) as Total_Time')) 
             ->leftJoin('employee_attendance', 'employees.emp_id', '=', 'employee_attendance.emp_id')
             //>where('employee_attendance.attendance_date','LIKE', '%'.$searchKeyword.'%')
             ->where('employee_attendance.attendance_date', '>=', ''.$searchFrom.'')
