@@ -114,7 +114,14 @@
                     @else
                     <li><a href="{{URL::to('hr/profile/'.Auth::user()->user_id.'/')}}">{{ ucwords(Auth::user()->user_fullnm) }}</a></li>
                     @endif
-                    <li><a href="{{ "http://".$_SERVER['HTTP_HOST']."/menu.php" }}"><span class="glyphicon glyphicon-share"></span></a></li>
+                    <!-- <li><a href="{{ "http://".$_SERVER['HTTP_HOST']."/menu.php" }}"><span class="glyphicon glyphicon-share"></span></a></li> -->
+
+                    <li>
+                      <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href = '<?php echo "http://".$_SERVER['HTTP_HOST']."/menu.php";?>'" style="margin-top:10px!important;margin-right:15px!important;margin-left:15px!important;">
+                        <span title="Back to Menu" class="glyphicon glyphicon-share" aria-hidden="true"></span>
+                      </button>
+                    </li>
+
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> MENU<span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
