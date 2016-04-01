@@ -89,7 +89,8 @@
           <?php 
           $dt = new DateTime();
           $dt->format('Y-m-d');
-          $userNew = DB::table('users')->orderBy('created_at','DESC')->take(3)->get();
+          $ringConn = DB::connection('ringdb');
+          $userNew = $ringConn->table('m_user')->orderBy('created_at','DESC')->take(3)->get();
           ?>
           @foreach($userNew as $userNew)
           <ul>
@@ -98,7 +99,7 @@
             @else
             <img src="{{URL::to('uploads/')}}/{{$userNew->avatar}}" width="35px" height="35px" class="img-circle">
             @endif
-            <a href="{{URL::to('admin/profile/')}}/{{$userNew->user_id}}">{{ $userNew->fullname }}</a>
+            <a href="{{URL::to('admin/profile/')}}/{{$userNew->user_id}}">{{ $userNew->user_fullnm }}</a>
           </ul>
           @endforeach
         </div>

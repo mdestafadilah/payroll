@@ -20,7 +20,8 @@ Route::filter('admin', function()
 		return Redirect::to('login');
 	} 
 
-	if (Auth::user()->usr_role != 1){
+	$role = MCode::where('idnt_id','000001')->where('cd1',Auth::user()->position)->pluck('cd2');
+	if ($role != 1){
 		Session::flash('errormessage', 'Ooh oh.You do not have rights to view the page you entered.');
 		return Redirect::to('employees');
 	}
@@ -34,8 +35,8 @@ Route::filter('hr', function()
 		Session::flash('errormessage', 'Please login first!');
 		return Redirect::to('login');
 	} 
-	
-	if (Auth::user()->usr_role != 0){
+	$role = MCode::where('idnt_id','000001')->where('cd1',Auth::user()->position)->pluck('cd2');	
+	if ($role != 0){
 		Session::flash('errormessage', 'Ooh oh.You do not have rights to view the page you entered.');
 		return Redirect::to('employees');
 	}
