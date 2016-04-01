@@ -5,6 +5,9 @@ Route::group(array('before' => 'auth'), function(){
 	Route::get('employees/sumarryReports','EmployeeController@postdisplaySummaryReport');
 	Route::post('employees/sumarryReports/filter','EmployeeController@showdisplaySummaryReport');
 
+	//Route::post('employees/{id}/sumarryReports/filter','EmployeeController@showTimeLogsSummary');
+	Route::get('employees/{id}/sumarryReports/filter/singleview','EmployeeController@showEmployeeSummaryReport');
+
 	Route::post('employees/sumarryReports/filter/export-report-csv','EmployeeController@download');
 
 	Route::get('count','EmployeeController@showCount');

@@ -12,11 +12,68 @@ class EmployeeController extends \BaseController {
 
     }
 
+    public function showStatsFilter($emp_id){
+        $searchFromTo = Input::get('dateRange');
+            $searchFrom = substr($searchFromTo, 0, 10);
+            $searchTo = substr($searchFromTo, -10);
+            //return $searchTo;
+
+        $employee_info = Employee::find($emp_id);
+
+        $employee = Time::Where('emp_id',$emp_id)
+        ->where('attendance_date', '>=', ''.$searchFrom.'')
+        ->where('attendance_date', '<=', ''.$searchTo.'') 
+        ->orderBy('attendance_date','desc')->paginate(15);
+        
+        if($employee->count() > 0){
+            return View::make('employees.stats')
+            ->with('employee', $employee_info)
+            ->with('employees', $employee)
+            ->with('Periodmessage', 'From "'.$searchFrom.'" To "'.$searchTo.'"')
+            ->with('Period', $searchFromTo);
+        }else{
+            if(!empty($searchFromTo)){
+                  Session::flash('errormessage', 'No records found!');  
+            }
+
+            return Redirect::to('employees/'.$emp_id.'/stats');
+        }
+    }
+
+
+    public function showEmployeeSummaryReport($emp_id)
+    {
+
+        $searchFromTo = Input::get('testdate');
+            $searchFrom = substr($searchFromTo, 0, 10);
+            $searchTo = substr($searchFromTo, -10);
+            //return $searchTo;
+
+        $employee_info = Employee::find($emp_id);
+
+        $employee = Time::Where('emp_id',$emp_id)
+        ->where('attendance_date', '>=', ''.$searchFrom.'')
+        ->where('attendance_date', '<=', ''.$searchTo.'') 
+        ->orderBy('attendance_date','desc')->paginate(15);
+        
+        if($employee->count() > 0){
+            return View::make('employees.stats')
+            ->with('employee', $employee_info)
+            ->with('employees', $employee)
+            ->with('Periodmessage', 'From "'.$searchFrom.'" To "'.$searchTo.'"')
+            ->with('Period', $searchFromTo);
+
+        }else{
+            Session::flash('errormessage', 'No records found!');
+            return Redirect::to('employees/'.$emp_id.'/stats');
+        }
+    }
+
 
     public function download()
     {
         $searchKeyword = Input::get('SearchPeriod');
-
+        return $searchKeyword;
         //$stringreplace = preg_replace('/\s+/', '', $searchKeyword);
         $stringreplace = str_replace(' - ', '_To_', $searchKeyword);
 
@@ -91,7 +148,7 @@ class EmployeeController extends \BaseController {
             $searchKeywordTo = $searchTo;*/
 
             $employee = DB::table('employees')
-            ->select('employees.avatar', 'employees.firstname', 'employees.lastname', DB::raw('SUM(employee_attendance.time_ot) as time_ot'), DB::raw('SUM(employee_attendance.time_late) as time_late'), DB::raw('SUM(employee_attendance.time_total) as time_total')) 
+            ->select('employees.emp_id', 'employees.avatar', 'employees.firstname', 'employees.lastname', DB::raw('SUM(employee_attendance.time_ot) as time_ot'), DB::raw('SUM(employee_attendance.time_late) as time_late'), DB::raw('SUM(employee_attendance.time_total) as time_total')) 
             ->leftJoin('employee_attendance', 'employees.emp_id', '=', 'employee_attendance.emp_id')
             //->where('employee_attendance.attendance_date', '>=', $searchKeywordFrom, 'and', 'employee_attendance.attendance_date', '<=', $searchKeywordTo)
             ->where('employee_attendance.attendance_date', '>=', ''.$searchFrom.'')
@@ -192,18 +249,8 @@ class EmployeeController extends \BaseController {
     }
 
 
-    public function showStatsFilter($emp_id){
-        $searchTimeKeyword = Input::get('searchKeywordDate');
-        $employee = Time::where('attendance_date','LIKE', '%'.$searchTimeKeyword.'%')->where('emp_id',$emp_id)->orderBy('attendance_date','desc')->paginate(10);
-        
-        if($employee->count() > 0){
-            return View::make('employees.stats')
-            ->with('employees', $employee);
-        }else{
-            Session::flash('errormessage', 'No records found!');
-            return Redirect::to('employees/'.$emp_id.'/stats');
-        }
-    }
+
+
 
 
     public function showDelete($emp_id){

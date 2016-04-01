@@ -38,35 +38,27 @@
     {{ Session::get('errormessage') }}
 </div>
 @endif
+
+
 <div class="row" style="">
   <div class="col-lg-3">
-  {{Form::open(array('url' => 'employees/sumarryReports/filter'))}}
-    <div class="@if ($errors->has('searchforMonth')) has-error @endif">
-        <div class="row">
-              <div class="col-lg-4">
-                <div class="input-group">
-                    <input id="dateRange" name="dateRange" style="width: 170px;" type="text" class="form-control" placeholder="Search Date..." required >
-                    <!-- <input style="width: 100px;" type="text" class="form-control" placeholder="Year..." name ="searchforYear" id="searchforYear" required > -->
-                </div>
-              </div>
-<!--               <div class="col-lg-4">
-                <div class="input-group">
-                    <input id="toDate" name="toDate" style="width: 100px;" type="text" class="form-control" placeholder="To..."  required >
-                    <!-- <input style="width: 100px;" type="text" class="form-control" placeholder="Month..." name ="searchforMonth" id="searchforMonth" required > -->
-<!--                 </div>
-              </div> --> 
-              <div class="col-lg-3">
-                <div class="input-group">
-                    <button style="left: 80px; position: absolute;" type="submit" class="btn btn-primary" type="button">Go!</button>
-                </div>
-              </div>
+    {{Form::open(array('url' => 'employees/sumarryReports/filter'))}}
+      <div class="@if ($errors->has('searchforMonth')) has-error @endif">
+        <div class="input-group">
+          <input id="dateRange" name="dateRange" style="" type="text" class="form-control" placeholder="Search Date..." required >
+          <span class="input-group-btn">
+            <button type="submit" class="btn btn-primary" type="button">Go!</button>
+          </span>
         </div>
-    </div> 
-
+      </div> 
     {{Form::close()}}
 
   </div>
-</div>
+
+  <div class="col-lg-3">
+  </div>
+
+  </div>
 
 
 <br/>
@@ -106,7 +98,12 @@
                         <img src="{{URL::to('uploads/avatar.png')}}" width="60px" height="60px" class="img-circle">
                     @else
                         <img src="{{URL::to('uploads/')}}/{{$info->avatar}}" width="60px" height="60px" class="img-circle"> 
-                    @endif{{ $info->firstname }} {{ $info->lastname }} 
+                    @endif
+                      @if($info->time_ot == null and $info->time_late == null and $info->time_total == null)
+                        {{ $info->firstname }} {{ $info->lastname }}
+                      @else
+                        <a href="{{ URL::to('employees/'.$info->emp_id.'/sumarryReports/filter/singleview?testdate='.$Period) }}">{{ $info->firstname }} {{ $info->lastname }} </a>
+                      @endif
                 </td>
 
                 <td class="active">{{ round($info->time_ot, 2) }}</td>
