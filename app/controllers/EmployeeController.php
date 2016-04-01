@@ -51,6 +51,8 @@ class EmployeeController extends \BaseController {
 
         $employee_info = Employee::find($emp_id);
 
+        Session::put('sess_selected_empid',$emp_id);
+
         $employee = Time::Where('emp_id',$emp_id)
         ->where('attendance_date', '>=', ''.$searchFrom.'')
         ->where('attendance_date', '<=', ''.$searchTo.'') 
