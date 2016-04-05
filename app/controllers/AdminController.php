@@ -173,11 +173,11 @@ class AdminController extends \BaseController
     {
         $user = User::find($user);
         $condition = User::where('del_flg', '0')->get()->count();
-        $condition2 = User::where('usr_role', '1')
+        $condition2 = User::where('position', '1')
         ->where('del_flg', '0')
         ->get()->count();
         if ($condition > 1) {
-            if ($user->usr_role != 1) {
+            if ($user->position != 1) {
                 $user->del_flg = '1';
                 $user->save();
                 if($user->avatar == null){

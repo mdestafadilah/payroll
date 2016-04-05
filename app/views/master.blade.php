@@ -17,7 +17,7 @@
             box-shadow: rgba(0, 0, 0, 0.3) 20px 20px 20px;
         }
         @media print
-        {
+        {   
             .noprint {display:none;}
             .nomargin {margin-top: 0;}
         }
@@ -26,7 +26,7 @@
          margin: 2mm 35mm 45mm 35mm; 
         }
      
- </style>
+    </style>
 
  <link rel="stylesheet" type="text/css" href="{{URL::to('css/jquery.datetimepicker.css')}}"/>
 
@@ -144,7 +144,7 @@
             </div>
         </div>
     </nav>
-    <div class="container" style="margin-top: 100px !important;">
+    <div class="container" style="margin-top: 100px;">
         @yield('content')
     </div>
 </body>
