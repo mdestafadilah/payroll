@@ -28,10 +28,10 @@
  <tbody>
   @foreach($taxes as $value)
   <tr>
-    <td class="active">{{$value->status}}</td>
-    <td class="active">{{$value->basis}}</td>
-    <td class="active">{{$value->excess}}</td>
-    <td class="active">{{$value->excemption}}</td>
+    <td class="active">{{{$value->status}}}</td>
+    <td class="active">{{{$value->basis}}}</td>
+    <td class="active">{{{$value->excess}}}</td>
+    <td class="active">{{{$value->excemption}}}</td>
     <td class="active">
      <a class="btn btn-small btn-default" href="{{ URL::to('employees/tax/update/' . $value->tax_id) }}"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span> {{trans('labels.tax.lbl_edit_tax')}}</a>
    </td>

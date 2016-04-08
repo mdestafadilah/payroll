@@ -51,9 +51,9 @@
                                     <img src="{{URL::to('uploads/')}}/{{$value->avatar}}" width="35px" height="35px" class="img-circle">
                                     @endif </td>
                                     <td class="active">{{{ucwords($value->firstname)}}} {{{ucwords($value->lastname)}}}</td>
-                                    <td class="active">{{ $value->gender }}</td>
-                                    <td class="active">{{$value->position}}</td>
-                                    <td class="active">{{ $value->hired_date }}</td>
+                                    <td class="active">{{{$value->gender}}}</td>
+                                    <td class="active">{{{$value->position}}}</td>
+                                    <td class="active">{{{$value->hired_date}}}</td>
                                     <td class="active"> 
                                        <a class="btn btn-small btn-default" name="showProfile" href="{{ URL::to('employees/' . $value->emp_id) }}"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{trans('labels.index.lbl_shw_profile')}}</a>
                                        <a class="btn btn-small btn-default" name="editProfile" href="{{ URL::to('employees/' . $value->emp_id . '/edit') }}"> <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> {{trans('labels.index.lbl_edit_profile')}}</a>

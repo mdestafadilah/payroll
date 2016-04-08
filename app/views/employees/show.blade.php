@@ -66,7 +66,7 @@
                         </tr>
                         <tr>
                             <td>Gender:</td>
-                            <td>{{ $employee->gender }}</td>
+                            <td>{{{$employee->gender}}}</td>
                         </tr>
                         <tr>
                             <td>Birth Date:</td>
@@ -86,25 +86,25 @@
                         </tr>
                         <tr>
                             <td>Position:</td>
-                            <td>{{ $employee->position }}</td>
+                            <td>{{{$employee->position}}}</td>
                         </tr>
                         <tr>
                             <td>Hire Date:</td>
-                            <td>{{ $employee->hired_date }}</td>
+                            <td>{{{$employee->hired_date}}}</td>
                         </tr>
 
                         <tr>
                             <td>SSS No.:</td>
-                            <td>{{ $employee->sss_no }}</td>
+                            <td>{{{$employee->sss_no}}}</td>
                         </tr>
 
                         <tr>
                             <td>PhilHealth No.:</td>
-                            <td>{{ $employee->ph_no }}</td>
+                            <td>{{{$employee->ph_no}}}</td>
                         </tr>
                         <tr>
                             <td>Pag-ibig No.:</td>
-                            <td>{{ $employee->pi_no }}</td>
+                            <td>{{{$employee->pi_no}}}</td>
                         </tr>
                     </tbody>
                 </table>

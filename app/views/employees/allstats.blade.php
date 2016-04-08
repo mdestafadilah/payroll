@@ -68,7 +68,7 @@
             <h3><span class="label label-primary" style="left: 6px; top: 12px; position: absolute;">
                 <span class="glyphicon glyphicon-info-sign" ></span>
                 @if( ! empty($Period))
-                {{ $Periodmessage }}
+                {{{$Periodmessage}}}
             </span></h3>
             <input type="hidden" name ="SearchPeriod" id="SearchPeriod" value="{{ $Period }}">
             @endif
@@ -106,9 +106,9 @@
                       @endif
                 </td>
 
-                <td class="active">{{ round($info->time_ot, 2) }}</td>
-                <td class="active">{{ round($info->time_late, 2) }}</td>
-                <td class="active">{{ round($info->time_total, 2) }}</td>
+                <td class="active">{{{round($info->time_ot, 2)}}}</td>
+                <td class="active">{{{round($info->time_late, 2)}}}</td>
+                <td class="active">{{{round($info->time_total, 2)}}}</td>
                 
             </tr>
             @endforeach

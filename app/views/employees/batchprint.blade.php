@@ -37,7 +37,7 @@
      <td  colspan="3"><h4 style="text-align:center;">RING SYSTEM DEVELOPMENT INC. </h4><p style="text-align:center;">* PAY SLIP *</p></td>
  </tr>
  <tr>
-    <td colspan="3">{{ $value->coverage }}</td>
+    <td colspan="3">{{{$value->coverage}}}</td>
 </tr>
 <tr>
     <td>Name:</td>
@@ -45,11 +45,11 @@
 </tr>
 <tr>
     <td>Basic Pay</td>
-    <td colspan="2">{{ $value->salary }}</td>
+    <td colspan="2">{{{$value->salary}}}</td>
 </tr>
 <tr>
     <td>Allowance</td>
-    <td colspan="2">{{ $value->allowance }}</td>
+    <td colspan="2">{{{$value->allowance}}}</td>
 </tr>
 <tr>
     <td>Overtime</td>
@@ -61,7 +61,7 @@
 </tr>
 <tr class="border_bottom">
     <td>Gross Pay</td>
-    <td colspan="2"><b>{{number_format($value->grosspay,2,'.',',') }}</b></td>
+    <td colspan="2"><b>{{number_format($value->grosspay,2,'.',',')}}</b></td>
 </tr>
 <tr>
     <td>W/Tax</td>
@@ -69,11 +69,11 @@
 </tr>
 <tr>
     <td>SSS</td>
-    <td colspan="2">{{number_format($sss =$value->sssContrib,2,'.',',') }}</td>
+    <td colspan="2">{{{number_format($sss =$value->sssContrib,2,'.',',')}}}</td>
 </tr>
 <tr>
     <td>HDMF</td>
-    <td colspan="2">{{number_format($pI= $value->pagibigContrib,2,'.',',') }}</td>
+    <td colspan="2">{{{number_format($pI= $value->pagibigContrib,2,'.',',')}}}</td>
 </tr>
 <tr>
     <td>PHIC</td>
