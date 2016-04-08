@@ -22,15 +22,15 @@
                             <tbody>
                                 <tr>
                                     <td>Full Name:</td>
-                                    <td>{{$user->fullname }}</td>
+                                    <td>{{{$user->user_fullnm}}}</td>
                                 </tr>
                                 <tr>
                                     <td>Position:</td>
-                                    <td>{{ $user->position }}</td>
+                                    <td>{{{$position}}}</td>
                                 </tr>
                                 <tr>
                                     <td>Role:</td>
-                                    @if(Auth::user()->usr_role == 1)
+                                    @if($role == 1)
                                     <td>{{'Admin'}}</td>
                                     @else
                                     <td>{{'HR'}}</td>

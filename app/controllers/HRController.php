@@ -4,7 +4,15 @@ class HRController extends BaseController{
 
     public function getProfile($user_id){
         $user = User::find($user_id);
-        return View::make('hr.profile')->with('user',$user);
+        $position = MCode::where('idnt_id','000001')
+                    ->where('cd1',$user->position)
+                    ->pluck('nm1');
+        $role = MCode::where('idnt_id','00001')
+                ->where('cd1',$user->position)
+                ->pluck('cd2');
+        return View::make('hr.profile')->with('user',$user)
+                ->with('position',$position)
+                ->with('role',$role);
     }
 
 

@@ -110,9 +110,9 @@
                     $cd2 = MCode::where('idnt_id','000001')->where('cd1',Auth::user()->position)->pluck('cd2');
                     ?>
                     @if($cd2 == 1)
-                    <li><a href="{{URL::to('admin/profile/'.Auth::user()->user_id.'/')}}">{{ ucwords(Auth::user()->user_fullnm) }}</a></li>
+                    <li><a href="{{URL::to('admin/profile/'.Auth::user()->user_id.'/')}}">{{{ucwords(Auth::user()->user_fullnm)}}}</a></li>
                     @else
-                    <li><a href="{{URL::to('hr/profile/'.Auth::user()->user_id.'/')}}">{{ ucwords(Auth::user()->user_fullnm) }}</a></li>
+                    <li><a href="{{URL::to('hr/profile/'.Auth::user()->user_id.'/')}}">{{{ucwords(Auth::user()->user_fullnm)}}}</a></li>
                     @endif
                     <!-- <li><a href="{{ "http://".$_SERVER['HTTP_HOST']."/menu.php" }}"><span class="glyphicon glyphicon-share"></span></a></li> -->
 

@@ -19,7 +19,7 @@
     <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
         <div class="panel panel-primary">
             <div class="panel-heading">
-                <h3 class="panel-title">{{ $employee->firstname }} {{ $employee->lastname }}</h3>
+                <h3 class="panel-title">{{{$employee->firstname}}} {{{$employee->lastname}}}</h3>
             </div>
             <div class="panel-body">
                 <div class="row">
@@ -58,11 +58,11 @@
                     <tbody>
                         <tr>
                             <td>First Name:</td>
-                            <td>{{ $employee->firstname }}</td>
+                            <td>{{{$employee->firstname}}}</td>
                         </tr>
                         <tr>
                             <td>Last  Name:</td>
-                            <td>{{ $employee->lastname }}</td>
+                            <td>{{{$employee->lastname}}}</td>
                         </tr>
                         <tr>
                             <td>Gender:</td>
@@ -70,19 +70,19 @@
                         </tr>
                         <tr>
                             <td>Birth Date:</td>
-                            <td>{{ $employee->birthdate }}</td>
+                            <td>{{{$employee->birthdate}}}</td>
                         </tr>
                         <tr>
                             <td>Home Address:</td>
-                            <td>{{ $employee->homeaddress }}</td>
+                            <td>{{{$employee->homeaddress}}}</td>
                         </tr>
                         <tr>
                             <td>Contact No.:</td>
-                            <td>{{ $employee->contactno }}</td>
+                            <td>{{{$employee->contactno}}}</td>
                         </tr>
                         <tr>
                             <td>Email Address::</td>
-                            <td>{{ $employee->email }}</td>
+                            <td>{{{$employee->email}}}</td>
                         </tr>
                         <tr>
                             <td>Position:</td>
@@ -110,9 +110,9 @@
                 </table>
                 LAST EDITED BY :  
                         @if($employee->user->avatar == null)
-                        <img src="{{URL::to('uploads/avatar.png')}}" width="35px" height="35px" class="img-circle"> <span class="label label-danger">{{$employee->user->user_fullnm}}</span>
+                        <img src="{{URL::to('uploads/avatar.png')}}" width="35px" height="35px" class="img-circle"> <span class="label label-danger">{{{$employee->user->user_fullnm}}}</span>
                         @else
-                        <img src="{{URL::to('uploads/')}}/{{$employee->user->avatar}}" width="35px" height="35px" class="img-circle"> <span class="label label-danger">{{$employee->user->user_fullnm}}</span>
+                        <img src="{{URL::to('uploads/')}}/{{$employee->user->avatar}}" width="35px" height="35px" class="img-circle"> <span class="label label-danger">{{{$employee->user->user_fullnm}}}</span>
                         @endif
             </div>
         </div>

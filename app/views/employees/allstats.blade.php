@@ -100,9 +100,9 @@
                         <img src="{{URL::to('uploads/')}}/{{$info->avatar}}" width="60px" height="60px" class="img-circle"> 
                     @endif
                       @if($info->time_ot == null and $info->time_late == null and $info->time_total == null)
-                        {{ $info->firstname }} {{ $info->lastname }}
+                        {{{$info->firstname}}} {{{$info->lastname}}}
                       @else
-                        <a href="{{ URL::to('employees/'.$info->emp_id.'/sumarryReports/filter/singleview?testdate='.$Period) }}">{{ $info->firstname }} {{ $info->lastname }} </a>
+                        <a href="{{ URL::to('employees/'.$info->emp_id.'/sumarryReports/filter/singleview?testdate='.$Period) }}">{{{$info->firstname}}} {{{$info->lastname}}} </a>
                       @endif
                 </td>
 

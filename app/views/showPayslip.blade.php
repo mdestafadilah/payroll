@@ -20,7 +20,7 @@
             </tr>
             <tr>
                 <td width="200px;">{{trans('labels.showPayslip.lbl_name')}}</td>
-                <td colspan="2" width="200px;">{{ucwords($payroll->employee->lastname) . ' '. ucwords($payroll->employee->firstname)}}</td>
+                <td colspan="2" width="200px;">{{{ucwords($payroll->employee->lastname) . ' '. ucwords($payroll->employee->firstname)}}}</td>
             </tr>
             <tr>
                 <td width="200px;">{{trans('labels.showPayslip.lbl_basic_pay')}}</td>

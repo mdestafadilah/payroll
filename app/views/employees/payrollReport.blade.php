@@ -113,7 +113,7 @@
                    <?php $tpay=$sssER=$phER=$piER=$sss1=$ph1=$pi1=0;?>
                    @foreach($employee as $value)
                    <tr>
-                    <td class="active">{{ ucwords($value->firstname) . ' '. ucwords($value->lastname)}}</td>
+                    <td class="active">{{{ucwords($value->firstname) . ' '. ucwords($value->lastname)}}}</td>
                     <td class="active">{{ $value->salary }}</td>
                     <td class="active">{{ $value->allowance }}</td>
                     <td class="active">{{$msal = $value->salary + $value->allowance }}</td>

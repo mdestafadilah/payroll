@@ -50,9 +50,9 @@
                                     @else
                                     <img src="{{URL::to('uploads/')}}/{{$value->avatar}}" width="35px" height="35px" class="img-circle">
                                     @endif </td>
-                                    <td class="active">{{ ucwords($value->firstname) }} {{ ucwords($value->lastname) }}</td>
+                                    <td class="active">{{{ucwords($value->firstname)}}} {{{ucwords($value->lastname)}}}</td>
                                     <td class="active">{{ $value->gender }}</td>
-                                    <td class="active">{{ $value->position }}</td>
+                                    <td class="active">{{$value->position}}</td>
                                     <td class="active">{{ $value->hired_date }}</td>
                                     <td class="active"> 
                                        <a class="btn btn-small btn-default" name="showProfile" href="{{ URL::to('employees/' . $value->emp_id) }}"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{trans('labels.index.lbl_shw_profile')}}</a>
@@ -110,7 +110,7 @@
             @else
             <img src="{{URL::to('uploads/')}}/{{$empNew->avatar}}" width="35px" height="35px" class="img-circle">
             @endif
-            <a href="{{URL::to('employees/')}}/{{$empNew->emp_id}}">{{ $empNew->firstname }} {{ $empNew->lastname }}</a>
+            <a href="{{URL::to('employees/')}}/{{$empNew->emp_id}}">{{{$empNew->firstname}}} {{{$empNew->lastname}}}</a>
         </ul>
         @endforeach
     </div>

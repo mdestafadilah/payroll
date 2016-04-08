@@ -41,7 +41,7 @@
 </tr>
 <tr>
     <td>Name:</td>
-    <td colspan="2">{{ ucwords($value->lastname) . ' '. ucwords($value->firstname)}}</td>
+    <td colspan="2">{{{ucwords($value->lastname) . ' '. ucwords($value->firstname)}}}</td>
 </tr>
 <tr>
     <td>Basic Pay</td>

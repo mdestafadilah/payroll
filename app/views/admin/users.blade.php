@@ -31,7 +31,7 @@
                       <img src="{{URL::to('uploads/')}}/{{$value->avatar}}" width="35px" height="35px" class="img-circle">
                       @endif
                     </td>
-                    <td class="active">{{ $value->user_fullnm }}</td>
+                    <td class="active">{{{$value->user_fullnm}}}</td>
                     <td class="active"><!-- {{ $value->position }} --></td>
                     <td class="active">
                       <a class="btn btn-small btn-default" href="{{ URL::to('admin/profile/' . $value->user_id) }}"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> {{trans('labels.master.lbl_show_profile')}}</a>
@@ -78,7 +78,7 @@
             @else
             <img src="{{URL::to('uploads/')}}/{{$empNew->avatar}}" width="35px" height="35px" class="img-circle">
             @endif
-            <a href="{{URL::to('employees/')}}/{{$empNew->emp_id}}">{{ $empNew->firstname }} {{ $empNew->lastname }}</a>
+            <a href="{{URL::to('employees/')}}/{{$empNew->emp_id}}">{{{$empNew->firstname}}} {{{$empNew->lastname}}}</a>
           </ul>
           @endforeach
         </div>
@@ -99,7 +99,7 @@
             @else
             <img src="{{URL::to('uploads/')}}/{{$userNew->avatar}}" width="35px" height="35px" class="img-circle">
             @endif
-            <a href="{{URL::to('admin/profile/')}}/{{$userNew->user_id}}">{{ $userNew->user_fullnm }}</a>
+            <a href="{{URL::to('admin/profile/')}}/{{$userNew->user_id}}">{{{$userNew->user_fullnm}}}</a>
           </ul>
           @endforeach
         </div>

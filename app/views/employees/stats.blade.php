@@ -81,7 +81,7 @@
                         @else
                             <img src="{{URL::to('uploads/')}}/{{$employee->avatar}}" width="60px" height="60px" class="img-circle"> 
                         @endif
-                        <span class="label label-primary">{{ $employee->firstname }} {{ $employee->lastname }}</span>
+                        <span class="label label-primary">{{{$employee->firstname}}} {{{$employee->lastname}}}</span>
                     </div>
                 
         </div>

@@ -20,7 +20,7 @@
                             <tbody>
                             <tr>
                                 <td class="style1">Name:</td>
-                                <td class="style2">{{ucwords($emp->firstname) . ' '. ucwords($emp->lastname)}} </td>
+                                <td class="style2">{{{ucwords($emp->firstname) . ' '. ucwords($emp->lastname)}}} </td>
                                 <td class="style1">SSS:</td>
                                 <td class="style2">{{number_format($emp->sssContrib,2,'.',',')}}</td>
                             </tr>

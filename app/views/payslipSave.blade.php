@@ -28,7 +28,7 @@
                 </tr>
                 <tr>
                     <td width="200px;">Name</td>
-                    <td colspan="2" width="200px;">{{ucwords($fullname)}}</td>
+                    <td colspan="2" width="200px;">{{{ucwords($fullname)}}}</td>
                 </tr>
                 <tr>
                     <td width="200px;">Basic Pay</td>
