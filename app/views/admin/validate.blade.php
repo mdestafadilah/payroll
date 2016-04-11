@@ -59,7 +59,7 @@
         @endif
     </div>
     {{ Form::submit('UPDATE', array('class' => 'btn col-sm-5 btn-md btn-success','style'=>'margin-left:40px;')) }}
-    <a href="{{URL::to('admin')}}" class="btn col-sm-5 btn-md btn-danger" style="margin-left:10px;">{{trans('labels.lbl_validate')}}</a>
+    <a href="{{URL::to('admin')}}" class="btn col-sm-5 btn-md btn-danger" style="margin-left:10px;">{{trans('labels.lbl_cancel')}}</a>
     {{ Form::close() }}
 </div>
 </div>

@@ -15,7 +15,7 @@ class AdminController extends \BaseController
     {
         $searchKeyword = Input::get('id');
         $results = User::where('user_id',  $searchKeyword)
-        ->orWhere('fullname', 'LIKE', '%'.  $searchKeyword .'%')
+        ->orWhere('user_fullnm', 'LIKE', '%'.  $searchKeyword .'%')
         ->paginate(10);  
 
         if($results->count() < 1){
