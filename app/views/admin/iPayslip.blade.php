@@ -1,6 +1,8 @@
 @extends('master')
 @section('content')
-<script>
+<script type="text/javascript">
+  
+  $(document).ready(function() {
     function Regen(){
         if(confirm("Are you sure you want to regenerate payslip?")){
             $(this).prev('button').remove();
@@ -8,7 +10,22 @@
             event.preventDefault();
         }
     }
+    $('#from').datetimepicker({
+        format: "Y/m/d",
+        clearBtn: true,
+        orientation: "top auto",
+        timepicker:false
+    });
+
+    $('#to').datetimepicker({
+        format: "Y/m/d",
+        clearBtn: true,
+        orientation: "top auto",
+        timepicker:false
+    });        
+  });
 </script>
+
 @if (Session::has('message'))
 <div class="alert alert-success alert-dismissible" role="alert">
     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
